@@ -16,12 +16,15 @@
     <section class="table">
       <div class="container">
         <table>
+          <caption class="hidden">
+            Thats
+          </caption>
           <thead>
             <tr>
-              <td>Person</td>
-              <td>Paid</td>
-              <td :class="{ hidden: !toWhomColumn }">To whom</td>
-              <td>How much</td>
+              <th scope="col">Person</th>
+              <th scope="col">Paid</th>
+              <th scope="col" :class="{ hidden: !toWhomColumn }">To whom</th>
+              <th scope="col">How much</th>
             </tr>
           </thead>
           <tbody>
@@ -160,6 +163,11 @@ export default {
 thead {
   //font-weight: bold;
   color: $prime;
+}
+
+th {
+  text-align: left;
+  font-weight: normal;
 }
 
 td {
