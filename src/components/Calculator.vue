@@ -103,6 +103,12 @@ export default {
     };
   },
   methods: {
+    computeAll() {
+      this.refreshTotalSum();
+      this.refreshAverage();
+      this.calcHowMuch();
+    },
+
     refreshTotalSum() {
       this.totalSum = this.rows.reduce((a, b) => Number(a) + Number(b.paid || 0), 0);
       return this.totalSum;
@@ -139,17 +145,13 @@ export default {
     },
   },
   mounted() {
-    this.refreshTotalSum();
-    this.refreshAverage();
-    this.calcHowMuch();
+    this.computeAll();
   },
   computed: {},
   watch: {
     rows: {
       handler() {
-        this.refreshTotalSum();
-        this.refreshAverage();
-        this.calcHowMuch();
+        this.computeAll();
       },
       deep: true,
     },
