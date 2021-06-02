@@ -1,0 +1,28 @@
+@import 'variables';
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    // -webkit-font-smoothing: antialiased;
+    // -moz-osx-font-smoothing: grayscale;
+    font-size: $fsize;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.dblock {
+    display: block;
+}
+
+.iblock {
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}
