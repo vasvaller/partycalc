@@ -64,7 +64,9 @@
                 />
               </td>
               <td>
-                <span v-on:click="deletePerson(index)" class="hoverControl btn btn-danger"
+                <span
+                  v-on:click="deletePerson(index)"
+                  class="hoverControl btn btn_sm btn-danger"
                   >✖️</span
                 >
               </td>

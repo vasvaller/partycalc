@@ -29,10 +29,15 @@
 
 .btn-danger {
     background-color: $prime;
-    padding: 0px 4px;
+    padding: 4px 6px;
     border-radius: 5px;
     display: flex;
-    justify-content: baseline;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_sm {
+    font-size: x-small;
 }
 
 .hoverControl {
@@ -41,4 +46,8 @@
 
 tr:hover .hoverControl {
     visibility: visible;
+}
+
+table {
+    border-collapse: collapse;
 }
