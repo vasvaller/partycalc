@@ -63,6 +63,11 @@
                   v-model="rows[index].howMuch"
                 />
               </td>
+              <td>
+                <span v-on:click="deletePerson(index)" class="hoverControl btn btn-danger"
+                  >✖️</span
+                >
+              </td>
             </tr>
           </tbody>
         </table>
@@ -138,6 +143,12 @@ export default {
         howMuch: 0,
       };
       this.rows.push(person);
+    },
+
+    deletePerson(index) {
+      if (this.rows.length > 1) {
+        this.rows.splice(index, 1);
+      }
     },
 
     calcHowMuch() {

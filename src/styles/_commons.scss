@@ -26,3 +26,19 @@
 .invisible {
     visibility: hidden;
 }
+
+.btn-danger {
+    background-color: $prime;
+    padding: 0px 4px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: baseline;
+}
+
+.hoverControl {
+    visibility: hidden;
+}
+
+tr:hover .hoverControl {
+    visibility: visible;
+}
