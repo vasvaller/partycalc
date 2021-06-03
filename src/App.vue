@@ -22,7 +22,7 @@ body {
   margin: 0;
   // font-family: "Courier New", Courier, monospace;
   color: white;
-  background-color: $second;
+  background: $second;
 }
 
 .wrapper {
@@ -54,7 +54,7 @@ section {
   width: min-content;
   padding: 30px;
   border-radius: 20px;
-  border: 1px solid $prime;
+  border: 2px solid $prime;
 }
 
 table {
