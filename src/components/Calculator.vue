@@ -23,7 +23,7 @@
             <tr>
               <th scope="col">Person</th>
               <th scope="col">Paid</th>
-              <th scope="col" :class="{ hidden: !toWhomColumn }">To whom</th>
+              <th scope="col" v-if="this.showColumnToWhom">To whom</th>
               <th scope="col">How much</th>
             </tr>
           </thead>
@@ -45,7 +45,8 @@
                   v-model="rows[index].paid"
                 />
               </td>
-              <td :class="{ hidden: !toWhomColumn }">
+              <!-- here -->
+              <td v-if="this.showColumnToWhom">
                 <input
                   readonly
                   type="text"
@@ -99,28 +100,21 @@
 export default {
   data() {
     return {
-      toWhomColumn: false,
-      rows: [
-        {
-          name: "Valtron",
-          paid: 300,
-          toWhom: "-",
-          howMuch: 0,
-        },
-        {
-          name: "Megan",
-          paid: 200,
-          toWhom: "Valtron",
-          howMuch: 50,
-        },
-      ],
+      showColumnToWhom: this.$store.getters.showColumnToWhom,
+      rows: this.$store.state.db,
       totalSum: 0,
       average: 0,
-      creditorList: [],
-      debtorList: [],
+      creditorsList: [],
+      debtorsList: [],
     };
   },
   methods: {
+    whoToWhom() {
+      console.log("creds:");
+      console.log(this.creditorsList);
+      console.log("debs:");
+      console.log(this.debtorsList);
+    },
     computeAll() {
       this.refreshTotalSum();
       this.refreshAverage();
@@ -139,12 +133,16 @@ export default {
 
     addMorePeople() {
       const person = {
+        id:
+          Math.random().toString(36).substring(2, 15) +
+          Math.random().toString(36).substring(2, 15),
         name: null,
         paid: null,
         toWhom: "",
         howMuch: 0,
       };
       this.rows.push(person);
+      this.whoToWhom();
     },
 
     deletePerson(index) {
@@ -154,21 +152,22 @@ export default {
     },
 
     calcHowMuch() {
-      this.creditorList.length = 0;
-      this.debtorList.length = 0;
+      this.creditorsList.length = 0;
+      this.debtorsList.length = 0;
 
       this.rows.forEach((row) => {
         row.howMuch = this.average - row.paid;
 
-        if (row.howMuch > 0) {
-          this.creditorList.push(row);
-        } else if (row.howMuch < 0) {
-          this.debtorList.push(row);
+        if (row.howMuch < 0) {
+          this.creditorsList.push(row);
+        } else if (row.howMuch > 0) {
+          this.debtorsList.push(row);
         }
       });
     },
   },
   mounted() {
+    console.log(this.$store.getters.showColumnToWhom);
     this.computeAll();
   },
   computed: {},

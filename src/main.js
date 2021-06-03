@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import store from "core-js";
+import store from "./store";
 import router from "./router";
 import App from "./App";
 

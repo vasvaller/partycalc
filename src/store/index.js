@@ -1,12 +1,18 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
+import conf from "../config.json";
+import db from "../../datasources/persons.json";
 
 export default createStore({
   state: {
+    config: conf,
+    db: db
   },
-  mutations: {
+  getters: {
+    showColumnToWhom(state) {
+      return state.config.showColumnToWhom;
+    }
   },
-  actions: {
-  },
-  modules: {
-  }
-})
+  mutations: {},
+  actions: {},
+  modules: {},
+});
