@@ -1,15 +1,10 @@
+// colors
 $prime: #DD6655;
-// $second: rgb(65, 37, 117);
 $second: linear-gradient(90.24deg, #6463aa 0%, #444383 100.69%);
+// $second: rgb(65, 37, 117);
 
-;
+
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 $fsize: 1em;
-
-
-.primary {
-    color: $prime;
-}
-
-.secondary {
-    color: $second;
-}
+$roboto-condens: 'Roboto Condensed', sans-serif;

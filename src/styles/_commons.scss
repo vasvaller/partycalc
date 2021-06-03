@@ -1,7 +1,8 @@
 @import 'variables';
 
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    // font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: Roboto Condensed;
     // -webkit-font-smoothing: antialiased;
     // -moz-osx-font-smoothing: grayscale;
     font-size: $fsize;
@@ -50,4 +51,17 @@ tr:hover .hoverControl {
 
 table {
     border-collapse: collapse;
+}
+
+input {
+    font-family: 'Roboto Condensed', sans-serif;;
+}
+
+// classes
+.primary {
+    color: $prime;
+}
+
+.secondary {
+    color: $second;
 }
