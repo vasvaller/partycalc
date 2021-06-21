@@ -23,8 +23,9 @@
             <tr>
               <th scope="col">Person</th>
               <th scope="col">Paid</th>
-              <th scope="col" v-if="this.showColumnToWhom">To whom</th>
               <th scope="col">How much</th>
+              <th scope="col" v-if="this.showColumnToWhom">From whom</th>
+              <th scope="col" v-if="this.showColumnToWhom">To whom</th>
             </tr>
           </thead>
           <tbody>
@@ -45,23 +46,28 @@
                   v-model="rows[index].paid"
                 />
               </td>
-              <!-- here -->
-              <td v-if="this.showColumnToWhom">
-                <input
-                  readonly
-                  type="text"
-                  tabindex="3"
-                  placeholder="To whom"
-                  v-model="rows[index].toWhom"
-                />
-              </td>
               <td>
                 <input
                   readonly
                   type="text"
-                  tabindex="4"
                   placeholder="How much"
                   v-model="rows[index].howMuch"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  readonly
+                  placeholder="From whom"
+                  v-model="rows[index].fromWhom"
+                />
+              </td>
+              <td v-if="this.showColumnToWhom">
+                <input
+                  readonly
+                  type="text"
+                  placeholder="To whom"
+                  v-model="rows[index].toWhom"
                 />
               </td>
               <td>
@@ -114,11 +120,49 @@ export default {
       console.log(this.creditorsList);
       console.log("debs:");
       console.log(this.debtorsList);
+
+      this.rows.forEach((pers) => {
+        pers.toWhom = "";
+        pers.fromWhom = "";
+        pers.balance = pers.howMuch;
+      });
+
+      while (this.creditorsList.length > 0 && this.debtorsList.length > 0) {
+        const addNamesToCredAndDebt = function () {
+          creditor.fromWhom += `${debtor.name}=${debtor.balance} `;
+          debtor.toWhom += `${creditor.name}=${creditor.balance} `;
+        };
+
+        this.creditorsList.sort((a, b) => b.balance - a.balance);
+        this.debtorsList.sort((a, b) => b.balance - a.balance);
+
+        let creditor = this.creditorsList[0];
+        let debtor = this.debtorsList[0];
+
+        if (debtor.balance > creditor.balance) {
+          addNamesToCredAndDebt();
+          debtor.balance -= creditor.balance;
+          creditor.balance = 0;
+          this.creditorsList.splice(0, 1);
+        } else if (debtor.howMuch < creditor.howMuch) {
+          addNamesToCredAndDebt();
+          creditor.balance -= debtor.balance;
+          debtor.balance = 0;
+          this.debtorsList.splice(0, 1);
+        } else {
+          addNamesToCredAndDebt();
+          debtor.balance = 0;
+          creditor.balance = 0;
+          this.debtorsList.splice(0, 1);
+          this.creditorsList.splice(0, 1);
+        }
+      }
     },
     computeAll() {
       this.refreshTotalSum();
       this.refreshAverage();
       this.calcHowMuch();
+      this.whoToWhom();
     },
 
     refreshTotalSum() {
@@ -142,7 +186,6 @@ export default {
         howMuch: 0,
       };
       this.rows.push(person);
-      this.whoToWhom();
     },
 
     deletePerson(index) {
@@ -160,6 +203,7 @@ export default {
 
         if (row.howMuch < 0) {
           this.creditorsList.push(row);
+          row.howMuch = Math.abs(row.howMuch);
         } else if (row.howMuch > 0) {
           this.debtorsList.push(row);
         }
@@ -170,13 +214,32 @@ export default {
     console.log(this.$store.getters.showColumnToWhom);
     this.computeAll();
   },
-  computed: {},
+  computed: {
+    rowsLength() {
+      return this.rows.length;
+    },
+    rowsPaid() {
+      return this.rows.map((row) => row.paid);
+    },
+    rowsNames() {
+      return this.rows.map((row) => row.name);
+    },
+  },
   watch: {
-    rows: {
-      handler() {
-        this.computeAll();
-      },
-      deep: true,
+    // rows: {
+    //   handler() {
+    //     this.computeAll();
+    //   },
+    //   deep: true,
+    // },
+    rowsLength() {
+      this.computeAll();
+    },
+    rowsPaid() {
+      this.computeAll();
+    },
+    rowsNames() {
+      this.computeAll();
     },
   },
 };
